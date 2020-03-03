@@ -7,16 +7,20 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Photo Gallery</title>
 
+	<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+
 	<style>
 		body {
 			background-color: #152735;
 			margin: 0;
 			overflow: hidden;
+			font-family: 'Pacifico', cursive;
 		}
 
 		.main {
 			text-align: center;
 			height: 80vh;
+			position: relative;
 		}
 
 		.main img {
@@ -45,6 +49,34 @@
 		.thumbs>div>img {
 			height: 100%;
 		}
+
+		.note {
+			position: absolute;
+			right: 30px;
+			bottom: 30px;
+			color: white;
+			text-align: right;
+			animation: neonBlue 1.5s ease-in-out infinite alternate;
+		}
+
+		p.large {
+			font-size: 60px;
+			margin: 0;
+		}
+
+		p.base {
+			font-size: 30px;
+			margin: 0;
+		}
+
+		@keyframes neonBlue {
+			from {
+				text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+			}
+			to {
+				text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+			}
+		}
 	</style>
 </head>
 
@@ -52,6 +84,11 @@
 	<!-- Photo Viewer -->
 	<div class="main">
 		<img id="mainImage" src="photos/1.jpg">
+		
+		<div class="note">
+			<p class="large">Photo Gallery</p>
+			<p class="base">Mayank</p>
+		</div>
 	</div>
 
 	<!-- Thumbnails -->
