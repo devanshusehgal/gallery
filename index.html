@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Photo Gallery</title>
+
+	<style>
+		body {
+			background-color: #152735;
+			margin: 0;
+			overflow: hidden;
+		}
+
+		.main {
+			text-align: center;
+			height: 80vh;
+		}
+
+		.main img {
+			height: 100%;
+		}
+
+		.thumbs {
+			width: 100%;
+			height: 20vh;
+		}
+
+		.thumbs>div {
+			width: 10%;
+			height: 100%;
+			background-size: cover;
+			float: left;
+			opacity: 0.5;
+		}
+
+		.thumbs>div.active {
+			width: calc(10% - 4px);
+			opacity: 1;
+			border: 2px solid white;
+		}
+
+		.thumbs>div>img {
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Photo Viewer -->
+	<div class="main">
+		<img id="mainImage" src="photos/1.jpg">
+	</div>
+
+	<!-- Thumbnails -->
+	<div class="thumbs">
+		<div class="active" onclick="setImage(this, 1)" style="background-image: url('photos/1.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 2)" style="background-image: url('photos/2.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 3)" style="background-image: url('photos/3.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 4)" style="background-image: url('photos/4.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 5)" style="background-image: url('photos/5.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 6)" style="background-image: url('photos/6.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 7)" style="background-image: url('photos/7.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 8)" style="background-image: url('photos/8.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 9)" style="background-image: url('photos/9.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 10)" style="background-image: url('photos/10.jpg')">&nbsp;</div>
+	</div>
+
+	<script>
+		function setImage(el, index) {
+			document.getElementById('mainImage').src = 'photos/'+index+'.jpg';
+			document.querySelectorAll('.active').forEach((e) => {
+				e.classList.remove('active');
+			});
+
+			el.classList.add('active');
+		}
+	</script>
+</body>
+
+</html>
