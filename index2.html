@@ -19,7 +19,7 @@
 
 		.main {
 			text-align: center;
-			height: 70vh;
+			height: 75vh;
 			position: relative;
 		}
 
@@ -33,8 +33,8 @@
 			left: 0;
 			bottom: 0;
 			z-index: -1;
-    	filter: blur(15px);
-			background-image: url('photos/1.jpg')
+    	filter: blur(10px);
+			background-image: url('photos/0.jpg')
 		}
 
 		.main img {
@@ -43,7 +43,7 @@
 
 		.thumbs {
 			width: 100%;
-			height: 30vh;
+			height: 25vh;
 		}
 
 		.thumbs>div {
@@ -52,13 +52,36 @@
 			background-position: center;
 			background-size: cover;
 			float: left;
-			opacity: 0.5;
+			opacity: 0.4;
+			cursor: pointer;
 		}
 
 		.thumbs>div.active {
-			width: calc(10% - 4px);
+			cursor: default;
+			width: calc(10% - 10px);
+			height: calc(100% - 10px);
 			opacity: 1;
-			border: 2px solid white;
+			border: 5px solid white;
+		}
+
+		@media only screen and (max-width: 1080px) {
+			.main {
+				height: 70vh;
+			}
+
+			.thumbs {
+				height: 30vh;
+			}
+
+			.thumbs>div {
+				width: 20%;
+				height: 50%;
+			}
+
+			.thumbs>div.active {
+				width: calc(20% - 10px);
+				height: calc(50% - 10px);
+			}
 		}
 
 		.title {
@@ -74,7 +97,7 @@
 		.note {
 			position: absolute;
 			right: 30px;
-			bottom: 30px;
+			bottom: 20px;
 			color: white;
 			text-align: right;
 			animation: neonBlue 1.5s ease-in-out infinite alternate;
@@ -86,8 +109,14 @@
 		}
 
 		p.base {
+			font-size: 40px;
+			margin: 0;
+		}
+
+		p.small {
 			font-size: 30px;
 			margin: 0;
+			margin-top: -10px;
 		}
 
 		@keyframes neonBlue {
@@ -106,7 +135,7 @@
 	<div id="mainViewer" class="main">
 		<div id="overlay"></div>
 
-		<img id="mainImage" src="photos/1.jpg">
+		<img id="mainImage" src="photos/0.jpg">
 
 		<div class="title">
 			<p class="large">Photo Gallery</p>
@@ -114,13 +143,14 @@
 		
 		<div class="note">
 			<p class="base">Mayank Malhotra</p>
-			<p class="base">12345-67890</p>
+			<p class="small">12345-67890</p>
 		</div>
 	</div>
 
 	<!-- Thumbnails -->
 	<div class="thumbs">
-		<div class="active" onclick="setImage(this, 1)" style="background-image: url('photos/1.jpg')">&nbsp;</div>
+		<div class="active" onclick="setImage(this, 0)" style="background-image: url('photos/0.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 1)" style="background-image: url('photos/1.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 2)" style="background-image: url('photos/2.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 3)" style="background-image: url('photos/3.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 4)" style="background-image: url('photos/4.jpg')">&nbsp;</div>
@@ -129,10 +159,13 @@
 		<div onclick="setImage(this, 7)" style="background-image: url('photos/7.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 8)" style="background-image: url('photos/8.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 9)" style="background-image: url('photos/9.jpg')">&nbsp;</div>
-		<div onclick="setImage(this, 10)" style="background-image: url('photos/10.jpg')">&nbsp;</div>
+		<!-- <div onclick="setImage(this, 10)" style="background-image: url('photos/10.jpg')">&nbsp;</div> -->
 	</div>
 
 	<script>
+		let currentIndex = 0;
+		const lastIndex = 9;
+
 		function setImage(el, index) {
 			document.querySelectorAll('.active').forEach((e) => {
 				e.classList.remove('active');
@@ -142,6 +175,29 @@
 
 			document.getElementById('mainImage').src = 'photos/'+index+'.jpg';
 			document.getElementById('overlay').style.backgroundImage = 'url(photos/'+index+'.jpg)';
+			currentIndex = index;
+		}
+
+		document.onkeydown = function(e) {
+			e = e || window.event;
+			
+			// Left Arrow
+			if (e.keyCode == '37') {
+				let newIndex = -1;
+				if (currentIndex > 0) newIndex = currentIndex - 1;
+				else newIndex = lastIndex;
+
+				setImage(document.querySelectorAll('.thumbs>div')[newIndex], newIndex);
+			}
+			
+			// Right Arrow
+			else if (e.keyCode == '39') {
+				let newIndex = -1;
+				if (currentIndex < lastIndex) newIndex = currentIndex + 1;
+				else newIndex = 0;
+				
+				setImage(document.querySelectorAll('.thumbs>div')[newIndex], newIndex);
+			}
 		}
 	</script>
 </body>
