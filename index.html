@@ -34,7 +34,7 @@
 			bottom: 0;
 			z-index: -1;
     	filter: blur(10px);
-			background-image: url('photos/1.jpg')
+			background-image: url('photos/0.jpg')
 		}
 
 		.main img {
@@ -52,10 +52,12 @@
 			background-position: center;
 			background-size: cover;
 			float: left;
-			opacity: 0.5;
+			opacity: 0.4;
+			cursor: pointer;
 		}
 
 		.thumbs>div.active {
+			cursor: default;
 			width: calc(10% - 10px);
 			height: calc(100% - 10px);
 			opacity: 1;
@@ -113,7 +115,7 @@
 	<div id="mainViewer" class="main">
 		<div id="overlay"></div>
 
-		<img id="mainImage" src="photos/1.jpg">
+		<img id="mainImage" src="photos/0.jpg">
 
 		<div class="title">
 			<p class="large">Photo Gallery</p>
@@ -127,7 +129,8 @@
 
 	<!-- Thumbnails -->
 	<div class="thumbs">
-		<div class="active" onclick="setImage(this, 1)" style="background-image: url('photos/1.jpg')">&nbsp;</div>
+		<div class="active" onclick="setImage(this, 0)" style="background-image: url('photos/0.jpg')">&nbsp;</div>
+		<div onclick="setImage(this, 1)" style="background-image: url('photos/1.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 2)" style="background-image: url('photos/2.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 3)" style="background-image: url('photos/3.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 4)" style="background-image: url('photos/4.jpg')">&nbsp;</div>
@@ -136,10 +139,13 @@
 		<div onclick="setImage(this, 7)" style="background-image: url('photos/7.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 8)" style="background-image: url('photos/8.jpg')">&nbsp;</div>
 		<div onclick="setImage(this, 9)" style="background-image: url('photos/9.jpg')">&nbsp;</div>
-		<div onclick="setImage(this, 10)" style="background-image: url('photos/10.jpg')">&nbsp;</div>
+		<!-- <div onclick="setImage(this, 10)" style="background-image: url('photos/10.jpg')">&nbsp;</div> -->
 	</div>
 
 	<script>
+		let currentIndex = 0;
+		const lastIndex = 9;
+
 		function setImage(el, index) {
 			document.querySelectorAll('.active').forEach((e) => {
 				e.classList.remove('active');
@@ -149,6 +155,29 @@
 
 			document.getElementById('mainImage').src = 'photos/'+index+'.jpg';
 			document.getElementById('overlay').style.backgroundImage = 'url(photos/'+index+'.jpg)';
+			currentIndex = index;
+		}
+
+		document.onkeydown = function(e) {
+			e = e || window.event;
+			
+			// Left Arrow
+			if (e.keyCode == '37') {
+				let newIndex = -1;
+				if (currentIndex > 0) newIndex = currentIndex - 1;
+				else newIndex = lastIndex;
+
+				setImage(document.querySelectorAll('.thumbs>div')[newIndex], newIndex);
+			}
+			
+			// Right Arrow
+			else if (e.keyCode == '39') {
+				let newIndex = -1;
+				if (currentIndex < lastIndex) newIndex = currentIndex + 1;
+				else newIndex = 0;
+				
+				setImage(document.querySelectorAll('.thumbs>div')[newIndex], newIndex);
+			}
 		}
 	</script>
 </body>
